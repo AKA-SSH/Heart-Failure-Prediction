@@ -1,0 +1,26 @@
+# data loading
+dill
+
+# notebook
+jupyter
+
+# data manipulation
+numpy
+pandas
+
+# data representation
+seaborn
+tabulate
+matplotlib
+
+# machine learning
+xgboost
+catboost
+lightgbm
+scikit-learn
+
+# hyperparameter tuning
+optuna
+
+# editable installation in current directory
+-e .
