@@ -97,14 +97,18 @@ class DataTransformation:
             # using preprocessor object to data
             logging.info('preprocessor training on training data')
             transformed_train_features= preprocessor_object.fit_transform(train_features)
+            logging.info('transformation of training data completed')
             transformed_test_features= preprocessor_object.transform(test_features)
+            logging.info('transformation of testing data completed')
 
             # saving transformed data
             transformed_train_data= np.c_[transformed_train_features, np.array(train_target)]
             transformed_test_data= np.c_[transformed_test_features, np.array(test_target)]
+            logging.info('data transformation completed')
 
             save_object(file_path= self.data_transformation_configuration.preprocessor_object_file_path,
                         obj= preprocessor_object)
+            logging.info(f'data transformer object saved to: {self.data_transformation_configuration.preprocessor_object_file_path}')
             
             return (transformed_train_data,
                     transformed_test_data, 
