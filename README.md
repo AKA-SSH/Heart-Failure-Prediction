@@ -1,4 +1,5 @@
 # Heart Failure Prediction
+![Final Model Performance](https://i.imgur.com/qJYdHpX.png)
 ## Overview
 Heart Failure Prediction is a data-driven project aiming to predict heart failure based on a diverse set of health indicators. The dataset encompasses key factors, including age, gender, chest pain type, blood pressure, cholesterol levels, and more.
 
