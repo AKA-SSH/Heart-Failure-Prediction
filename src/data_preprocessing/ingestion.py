@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
 
 from src.data_preprocessing.transformation import *
+from src.model_training.model_trainer import *
 
 # data ingestion program
 @dataclass
@@ -104,3 +105,5 @@ if __name__ == '__main__':
     transformed_train_dataset, transformed_test_dataset, _= data_transformation.initiate_data_transformation(train_dataset, test_dataset)
 
     # model training
+    model_trainer= ModelTrainer()
+    print(model_trainer.initiate_model_trainer(transformed_train_dataset, transformed_test_dataset))
