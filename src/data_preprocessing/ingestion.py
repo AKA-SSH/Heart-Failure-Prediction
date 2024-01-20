@@ -102,3 +102,5 @@ if __name__ == '__main__':
     # data transformation
     data_transformation= DataTransformation()
     transformed_train_dataset, transformed_test_dataset, _= data_transformation.initiate_data_transformation(train_dataset, test_dataset)
+
+    # model training
