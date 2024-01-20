@@ -4,6 +4,7 @@ import sys
 from src.logger import logging
 from src.exception import CustomException
 
+import numpy as np
 import pandas as pd
 from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
@@ -36,6 +37,24 @@ class DataIngestion:
                              header= True,
                              index= False)
             logging.info(f'raw data saved to: {self.data_ingestion_configuration.raw_data_file_path}')
+
+            # handling data integrity issues
+            logging.info('data handling initiated')
+            
+            # handling RestingBP
+            Q1= np.percentile(dataframe.RestingBP, 25)
+            Q3= np.percentile(dataframe.RestingBP, 75)
+            IQR= Q3-Q1
+            LB= Q1 - 1.5*IQR
+            dataframe.RestingBP= list(map(lambda x: LB if x < LB else x, dataframe.RestingBP))
+
+            # handling Cholesterol
+            heart_patient_cholesterol= dataframe[dataframe.HeartDisease == 1].Cholesterol
+            heart_patient_cholesterol = [i for i in heart_patient_cholesterol if i>125]
+            median_cholesterol= np.percentile(heart_patient_cholesterol, 50)
+            dataframe.Cholesterol= list(map(lambda x: median_cholesterol if x < 125 else x, dataframe.Cholesterol))
+
+            logging.info('data handling completed')
 
             # splitting the data into train-test data
             logging.info('train-test split initiated')
