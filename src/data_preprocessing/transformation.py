@@ -40,11 +40,11 @@ class DataTransformation:
 
             # creating pipeline for numerical columns
             logging.info('pipeline creation initiated')
-            N_pipeline= Pipeline(steps= ('scaler', MinMaxScaler()))
+            N_pipeline= Pipeline(steps= [('scaler', MinMaxScaler())])
             logging.info('numeric pipeline created')
 
             # creating pipeline for categorical columns
-            C_pipeline= Pipeline(steps= ('one_hot_encoder', OneHotEncoder()))
+            C_pipeline= Pipeline(steps= [('one_hot_encoder', OneHotEncoder())])
             logging.info('categoric pipeline created')
 
             # combining both pipelines
@@ -83,8 +83,6 @@ class DataTransformation:
             logging.info('preprocessor creation completed')
             
             target= 'HeartDisease'
-            N_columns= ['Age', 'RestingBP', 'Cholesterol', 'MaxHR', 'Oldpeak']
-            C_columns= ['Sex', 'ChestPainType', 'FastingBS', 'RestingECG', 'ExerciseAngina', 'ST_Slope']
 
             # training data separation
             train_features= train_dataframe.drop(target, axis= 1)
@@ -105,8 +103,13 @@ class DataTransformation:
             transformed_train_data= np.c_[transformed_train_features, np.array(train_target)]
             transformed_test_data= np.c_[transformed_test_features, np.array(test_target)]
 
-            save_object(file_path='',
-                        obj= '')
+            save_object(file_path= self.data_transformation_configuration.preprocessor_object_file_path,
+                        obj= preprocessor_object)
+            
+            return (transformed_train_data,
+                    transformed_test_data, 
+                    self.data_transformation_configuration.preprocessor_object_file_path)
 
-        except:
-            pass
+        except Exception as CE:
+            logging.error(f'error during data transformation: {str(CE)}', exc_info= True)
+            raise CustomException(CE, sys)
