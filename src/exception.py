@@ -1,6 +1,9 @@
 import sys
 
 def error_message_detail(error) -> str:
+    '''
+    This function helps in creating the detailed error message
+    '''
     _, _, exc_tb= sys.exc_info()
     file_name= exc_tb.tb_frame.f_code.co_filename if exc_tb else None
     line_number= exc_tb.tb_lineno if exc_tb else None
@@ -9,6 +12,9 @@ def error_message_detail(error) -> str:
 
 class CustomException(Exception):
     def __init__(self, error_message):
+        '''
+        This function imports the properties from its parent class
+        '''
         super().__init__(error_message)
         self.error_message= error_message_detail(error_message)
     
