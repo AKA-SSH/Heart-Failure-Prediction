@@ -9,6 +9,8 @@ import pandas as pd
 from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
 
+from src.data_preprocessing.transformation import *
+
 # data ingestion program
 @dataclass
 class DataIngestionConfiguration:
@@ -93,5 +95,10 @@ class DataIngestion:
         
 # program execution
 if __name__ == '__main__':
+    # data ingestion
     object= DataIngestion()
     train_dataset, test_dataset= object.initiate_data_ingestion()
+
+    # data transformation
+    data_transformation= DataTransformation()
+    transformed_train_dataset, transformed_test_dataset, _= data_transformation.initiate_data_transformation(train_dataset, test_dataset)
