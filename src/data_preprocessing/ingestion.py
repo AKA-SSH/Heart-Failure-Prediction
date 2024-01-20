@@ -21,6 +21,17 @@ class DataIngestion:
         self.data_ingestion_configuration= DataIngestionConfiguration()
     
     def initiate_data_ingestion(self, csv_file_path= 'data\heart_failure_prediction_dataset.csv'):
+        '''
+        This function loads data, handle data inconsitencies, split data and save it to respective .csv file
+
+        Input:
+            - Raw Data File Path
+        
+        Output:
+            - Raw Data CSV
+            - Test Data CSV
+            - Train Data CSV
+        '''
         try:
             logging.info('data ingestion initiated')
 

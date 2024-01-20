@@ -54,7 +54,7 @@ class DataTransformation:
             return preprocessor
 
         except Exception as CE:
-            logging.error(f'error during data ingestion: {str(CE)}', exc_info= True)
+            logging.error(f'error during preprocessor object creation: {str(CE)}', exc_info= True)
             raise CustomException(CE, sys)
     
     def initiate_data_transformation(self, train_data_file_path, test_data_file_path):
@@ -70,7 +70,43 @@ class DataTransformation:
             - Transformed Testing Data
         '''
         try:
-            pass
+            # loading data
+            logging.info('data transformation initiated')
+            logging.info('loading train and test data')
+            train_dataframe= pd.read_csv(train_data_file_path)
+            test_dataframe= pd.read_csv(test_data_file_path)
+            logging.info('loading completed')
+
+            # creating preprocessor object
+            logging.info('preprocessor creation initiated')
+            preprocessor_object= self.create_data_transformation_object()
+            logging.info('preprocessor creation completed')
+            
+            target= 'HeartDisease'
+            N_columns= ['Age', 'RestingBP', 'Cholesterol', 'MaxHR', 'Oldpeak']
+            C_columns= ['Sex', 'ChestPainType', 'FastingBS', 'RestingECG', 'ExerciseAngina', 'ST_Slope']
+
+            # training data separation
+            train_features= train_dataframe.drop(target, axis= 1)
+            train_target= train_dataframe[target]
+            logging.info('train features and target separated')
+
+            # testing data separation
+            test_features= test_dataframe.drop(target, axis= 1)
+            test_target= test_dataframe[target]
+            logging.info('test features and target separated')
+
+            # using preprocessor object to data
+            logging.info('preprocessor training on training data')
+            transformed_train_features= preprocessor_object.fit_transform(train_features)
+            transformed_test_features= preprocessor_object.transform(test_features)
+
+            # saving transformed data
+            transformed_train_data= np.c_[transformed_train_features, np.array(train_target)]
+            transformed_test_data= np.c_[transformed_test_features, np.array(test_target)]
+
+            save_object(file_path='',
+                        obj= '')
 
         except:
             pass
